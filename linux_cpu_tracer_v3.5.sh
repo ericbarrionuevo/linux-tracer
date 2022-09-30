@@ -641,7 +641,7 @@ EOF
 
 collect_info () {
 
-echo " *** Collecting data..."
+echo " *** Fetching system configuration..."
 
 echo -ne ' *** Initiating job...                    [0%]\r'
 sleep 1
@@ -653,13 +653,13 @@ sleep 1
 #2
 mkdir -p $DIRNAME/mde_diagnostics/etc/opt/microsoft
 sudo cp -r /etc/opt/microsoft/mdatp  $DIRNAME/mde_diagnostics/etc/opt/microsoft
-echo -ne ' *** ||                                   [4%]\r'
+echo -ne '     ||                                   [4%]\r'
 sleep 1
 
 #3
 mkdir -p $DIRNAME/mde_diagnostics/var/log/microsoft/mdatp/
 sudo cp -r /var/log/microsoft/mdatp/* $DIRNAME/mde_diagnostics/var/log/microsoft/mdatp/
-echo -ne ' *** |||||                                [11%]\r'
+echo -ne '     |||||                                [11%]\r'
 sleep 1
 
 #4
@@ -669,81 +669,83 @@ cd $DIRNAME
 sudo zip -r mde_diagnostics.zip mde_diagnostics > /dev/null 2>&1
 sudo rm -rf mde_diagnostics
 cd ../
-echo -ne ' *** |||||                                [14%]\r'
+echo -ne '     |||||                                [14%]\r'
 sleep 1
 
 #5
-echo -ne ' *** |||||||                              [19%]\r'
+echo -ne '     |||||||                              [19%]\r'
 sleep 1
 
 #6
 cp /etc/os-release $DIRNAME/os-release.txt
-echo -ne ' *** ||||||||                             [28%]\r'
+sudo cp /etc/audisp/audispd.conf $DIRNAME/audispd_conf.txt
+sudo cp /etc/audit/rules.d/audit.rules $DIRNAME/audit_rules_conf.txt
+echo -ne '     ||||||||                             [28%]\r'
 sleep 1
 
 #7
 free -h > $DIRNAME/free.txt
-echo -ne ' *** ||||||||||                           [30%]\r'
+echo -ne '     ||||||||||                           [30%]\r'
 sleep 1
 
 #8
 cat /proc/cpuinfo | grep processor > $DIRNAME/cpuinfo.txt
-echo -ne ' *** ||||||||||||                         [33%]\r'
+echo -ne '     ||||||||||||                         [33%]\r'
 sleep 1
 
 #9
 mdatp health > $DIRNAME/health.txt
-echo -ne ' *** |||||||||||||||                      [39%]\r'
+echo -ne '     |||||||||||||||                      [39%]\r'
 sleep 1
 
 #10
 df -h > $DIRNAME/df.txt
-echo -ne ' *** |||||||||||||||||                    [45%]\r'
+echo -ne '     |||||||||||||||||                    [45%]\r'
 sleep 1
 
 #11
 pstree > $DIRNAME/pstree.txt
-echo -ne ' *** |||||||||||||||||||                  [51%]\r'
+echo -ne '     |||||||||||||||||||                  [51%]\r'
 sleep 1
 
 #12
 ps -ef > $DIRNAME/psef.txt
-echo -ne ' *** |||||||||||||||||||||                [57%]\r'
+echo -ne '     |||||||||||||||||||||                [57%]\r'
 sleep 1
 
 #13
 uname -a > $DIRNAME/uname-a.txt
-echo -ne ' *** |||||||||||||||||||||||              [62%]\r'
+echo -ne '     |||||||||||||||||||||||              [62%]\r'
 sleep 1
 
 #14
 mdatp connectivity test > $DIRNAME/mdatp_conectivity_test.txt
-echo -ne ' *** |||||||||||||||||||||||||            [69%]\r'
+echo -ne '     |||||||||||||||||||||||||            [69%]\r'
 sleep 1
 
 #15
 mdatp exclusion list > $DIRNAME/mdatp_exclusion_list.txt
-echo -ne ' *** |||||||||||||||||||||||||||          [77%]\r'
+echo -ne '     |||||||||||||||||||||||||||          [77%]\r'
 sleep 1
 
 #16
 sudo auditctl -l > $DIRNAME/auditd_exclusion_list.txt
-echo -ne ' *** ||||||||||||||||||||||||||||||       [83%]\r'
+echo -ne '     ||||||||||||||||||||||||||||||       [83%]\r'
 sleep 1
 
 #17
 sudo service auditd status > $DIRNAME/service_auditd_status.txt 2>/dev/null
-echo -ne ' *** |||||||||||||||||||||||||||||||||    [91%]\r'
+echo -ne '     |||||||||||||||||||||||||||||||||    [91%]\r'
 sleep 1
 
 #18
 sudo service mdatp status > $DIRNAME/service_mdatp_status.txt 2>/dev/null
-echo -ne ' *** |||||||||||||||||||||||||||||||||||| [99%]\r'
+echo -ne '     |||||||||||||||||||||||||||||||||||| [99%]\r'
 sleep 1
 
 #19
 sudo dmesg > $DIRNAME/dmesg.txt
-echo -ne ' *** |||||||||||||||||||||||||||||||||||||[100%]\r'
+echo -ne '     |||||||||||||||||||||||||||||||||||||[100%]\r'
 sleep 2
 echo " "
 
