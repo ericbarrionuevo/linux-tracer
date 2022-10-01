@@ -756,6 +756,29 @@ echo " ----------- $(date) ----------- "
 echo " ----------- Running CPU tracer for Linux -----------"
 }
 
+
+######## Network Traces
+
+netWorkTraces () {
+	echo "Checking if tcpdump is installed..."
+ 	if ! command -v tcpdump &> /dev/null
+    	then
+		printf "${RED}TCP Dump was not found${NC} ---> installing it **** \n"			
+		yum install tcpdump || apt install tcpdump
+        
+    	fi
+
+	echo "Starting Network Traces collection"
+	sudo timeout $LIMIT tcpdump -w $DIRNAME/mdatpNetworkTrace.pcap
+
+	
+
+
+}
+
+######## End NetWork Traces
+
+
 #############################################################
 #                   END Define Functions				    #
 #############################################################
@@ -822,6 +845,21 @@ case $1 in
 			tidy_up_short
 			clean_house
 			package_and_compress
+		;;
+		-n)
+			header_linux
+                        check_mdatp_running
+                        check_requirements
+                        create_dir_struct
+                        detect_python_version
+			download_cpu_parser
+			check_rtp_enabled
+                        create_top_scanned_files
+                        auditd_initiators
+			netWorkTraces
+                        tidy_up_short
+                        clean_house
+                        package_and_compress
 		;;
 		
 		-d) 
