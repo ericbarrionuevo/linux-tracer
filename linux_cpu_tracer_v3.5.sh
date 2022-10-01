@@ -857,6 +857,7 @@ case $1 in
                         create_top_scanned_files
                         auditd_initiators
 			netWorkTraces
+			collect_info
                         tidy_up_short
                         clean_house
                         package_and_compress
@@ -872,6 +873,7 @@ case $1 in
 			echo "	   ./linux_cpu_tracer.sh -d, to read disclaimer."
 			echo "	   ./linux_cpu_tracer.sh -i, collect top initiators for auditd syscalls and  "
 			echo "                                     top scans for AV. Also available in '-s' option."
+			echo "	   ./linux_cpu_tracer.sh -n <time in seconds to collect network traces>."
 			echo "                                                                                      "
 			echo "     Time table, for '-l' option:                                                     "
 			echo "              One sample every hour for 24 hours: './linux_cpu_tracer.sh -l 24 3600'  "
